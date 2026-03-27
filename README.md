@@ -18,6 +18,20 @@ This lightweight repository is the portfolio version of the project: it keeps th
 - [3D True Scale](./github%20project_wind/hill_of_towie_3d_true_scale.html)
 - [Speed Explorer](./github%20project_wind/hill_of_towie_interactive_speed.html)
 
+## Screenshots
+
+<table>
+<tr>
+<td width="50%" align="center"><strong>Wind Rose</strong><br><img src="./assets/screenshots/wind-rose.png" alt="Wind Rose screenshot" width="100%"></td>
+<td width="50%" align="center"><strong>U/V Component Chart</strong><br><img src="./assets/screenshots/uv-component-chart.png" alt="U/V Component Chart screenshot" width="100%"></td>
+</tr>
+<tr>
+<td width="50%" align="center"><strong>3D True Scale</strong><br><img src="./assets/screenshots/true-scale.png" alt="3D True Scale screenshot" width="100%"></td>
+<td width="50%" align="center"><strong>Speed Explorer</strong><br><img src="./assets/screenshots/speed-explorer.png" alt="Speed Explorer screenshot" width="100%"></td>
+</tr>
+</table>
+
+
 ## Active Modules
 
 ### 1. Wind Rose
@@ -48,6 +62,12 @@ Terrain-aware 3D wind-speed exploration view with directional and turbine-level 
 
 ```text
 github_light/
+|-- assets/
+|   `-- screenshots/
+|       |-- wind-rose.png
+|       |-- uv-component-chart.png
+|       |-- true-scale.png
+|       `-- speed-explorer.png
 |-- module_generators/
 |   |-- build_wind_rose.py
 |   |-- build_uv_component_chart.py
