@@ -18,6 +18,14 @@ This lightweight repository is the portfolio version of the project: it keeps th
 - [3D True Scale](./github%20project_wind/hill_of_towie_3d_true_scale.html)
 - [Speed Explorer](./github%20project_wind/hill_of_towie_interactive_speed.html)
 
+## Unified Pack Overview
+
+The public lightweight repository keeps the modular HTML demos, while the full local workflow can still be bundled into a single Pack interface like this:
+
+<p align="center">
+  <img src="./assets/screenshots/pack-overview.png" alt="Unified Pack overview screenshot" width="100%">
+</p>
+
 ## Screenshots
 
 <table>
@@ -64,6 +72,7 @@ Terrain-aware 3D wind-speed exploration view with directional and turbine-level 
 github_light/
 |-- assets/
 |   `-- screenshots/
+|       |-- pack-overview.png
 |       |-- wind-rose.png
 |       |-- uv-component-chart.png
 |       |-- true-scale.png
