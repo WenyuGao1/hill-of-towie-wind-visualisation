@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hill of Towie - Online Demo</title>
+<style>
+:root{
+  --h:64px;
+  --ink:#0f172a;
+  --muted:#64748b;
+  --line:rgba(148,163,184,.22);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top left, rgba(37,99,235,.10), transparent 28%),
+    radial-gradient(circle at top right, rgba(13,148,136,.08), transparent 24%),
+    linear-gradient(180deg, #f8fafc 0%, #edf4ff 100%);
+  color:var(--ink);
+  font:14px/1.5 system-ui,Segoe UI,Roboto;
+}
+header.nav{
+  height:var(--h);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 18px;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(18px);
+  box-shadow:0 10px 30px rgba(15,23,42,.06);
+  z-index:10;
+}
+.brand{font-weight:700;letter-spacing:.2px;color:#0f172a}
+.links{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sp{flex:1}
+.tab,.action{
+  border:1px solid rgba(59,130,246,.16);
+  background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(241,245,249,.92));
+  color:var(--ink);
+  border-radius:12px;
+  padding:7px 13px;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(37,99,235,.08);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+.tab:hover,.action:hover{
+  transform:translateY(-1px);
+  background:linear-gradient(180deg, #ffffff, #eef6ff);
+  border-color:rgba(59,130,246,.26);
+  box-shadow:0 14px 30px rgba(37,99,235,.12);
+}
+.tab.active{
+  background:linear-gradient(135deg, rgba(37,99,235,.14), rgba(13,148,136,.14));
+  border-color:rgba(59,130,246,.30);
+}
+.action[disabled]{
+  opacity:.45;
+  cursor:default;
+  transform:none;
+  box-shadow:none;
+}
+#app{
+  min-height:calc(100vh - var(--h));
+}
+#homeView{
+  display:block;
+}
+.hero{text-align:center;padding:36px 22px 10px}
+.hero h1{margin:0;font-size:clamp(22px,3.2vw,30px);font-weight:700;letter-spacing:.15px}
+.hero .sub{margin-top:8px;color:var(--muted)}
+.hero .meta{margin-top:12px;color:#475569}
+.grid{
+  display:grid;
+  gap:18px;
+  padding:12px 22px 28px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  align-content:start;
+}
+.card{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:18px;
+  background:rgba(255,255,255,.84);
+  backdrop-filter:blur(16px);
+  box-shadow:0 18px 44px rgba(15,23,42,.08);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:180px;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(59,130,246,.28);
+  box-shadow:0 22px 54px rgba(15,23,42,.12);
+}
+.card h3{margin:10px 0 8px;font-size:17px}
+.card p{margin:0;color:#516074}
+.tag{
+  display:inline-block;
+  font-size:12px;
+  background:linear-gradient(135deg, rgba(37,99,235,.10), rgba(13,148,136,.12));
+  border:1px solid rgba(59,130,246,.18);
+  padding:3px 9px;
+  border-radius:999px;
+  color:#345;
+}
+.actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.card button,.card a{
+  border:1px solid rgba(59,130,246,.18);
+  background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(239,246,255,.92));
+  color:#0f172a;
+  border-radius:12px;
+  padding:9px 15px;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(37,99,235,.10);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  text-decoration:none;
+}
+.card button:hover,.card a:hover{
+  transform:translateY(-1px);
+  border-color:rgba(59,130,246,.30);
+  box-shadow:0 16px 30px rgba(37,99,235,.15);
+}
+.demoNote{
+  margin:2px 22px 6px;
+  color:#536277;
+}
+#frameView{
+  display:none;
+  position:fixed;
+  inset:var(--h) 0 0 0;
+  background:linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,.06));
+}
+#viewer{
+  width:100%;
+  height:100%;
+  border:0;
+  background:#fff;
+}
+#loading{
+  position:absolute;
+  top:18px;
+  right:20px;
+  display:none;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  background:rgba(255,255,255,.88);
+  border:1px solid var(--line);
+  border-radius:999px;
+  box-shadow:0 18px 36px rgba(15,23,42,.10);
+  color:var(--ink);
+  font-weight:600;
+  z-index:15;
+}
+.loadingDot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:linear-gradient(135deg, #2563eb, #0d9488);
+  box-shadow:0 0 0 6px rgba(37,99,235,.12);
+  animation:pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(.92);opacity:.8}
+  50%{transform:scale(1.08);opacity:1}
+}
+@media (max-width: 900px){
+  header.nav{
+    height:auto;
+    min-height:var(--h);
+    align-items:flex-start;
+    flex-wrap:wrap;
+    padding:10px 14px;
+  }
+  .sp{display:none}
+  #frameView{inset:92px 0 0 0}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="brand">Hill of Towie</div>
+  <div class="links">
+    <button class="tab" data-file="__home__">Home</button>
+    <button class="tab" data-file="annual_wind_rose_2023_interactive.html">Wind Rose</button>
+    <button class="tab" data-file="wind_uv_anomalies_2023_offline.html">U/V Component Chart</button>
+    <button class="tab" data-file="hill_of_towie_3d_true_scale.html">3D True Scale</button>
+    <button class="tab" data-file="hill_of_towie_interactive_speed.html">Speed Explorer</button>
+  </div>
+  <div class="sp"></div>
+  <button class="action" id="openBtn">Open</button>
+  <button class="action" id="reloadBtn">Reload</button>
+  <button class="action" id="fullscreenBtn">Fullscreen</button>
+</header>
+
+<main id="app">
+  <section id="homeView">
+    <section class="hero">
+      <h1>Hill of Towie Wind Farm Data Analysis &amp; Visualization</h1>
+      <div class="sub">Wenyu Gao</div>
+      <div class="meta">GitHub Pages demo built from the lightweight portfolio repository.</div>
+    </section>
+    <div class="demoNote">
+      Use the navigation bar to explore the four interactive modules online, or open each module in a separate tab.
+    </div>
+    <section class="grid">
+      <div class="card">
+        <div>
+          <div class="tag">Project</div>
+          <h3>Wind Rose</h3>
+          <p>Interactive annual wind-direction and wind-speed distribution view.</p>
+        </div>
+        <div class="actions">
+          <button data-open="annual_wind_rose_2023_interactive.html">Open In Demo</button>
+          <a href="./github%20project_wind/annual_wind_rose_2023_interactive.html" target="_blank" rel="noreferrer">Open File</a>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="tag">Project</div>
+          <h3>U/V Component Chart</h3>
+          <p>Monthly east-west and north-south component time-series explorer.</p>
+        </div>
+        <div class="actions">
+          <button data-open="wind_uv_anomalies_2023_offline.html">Open In Demo</button>
+          <a href="./github%20project_wind/wind_uv_anomalies_2023_offline.html" target="_blank" rel="noreferrer">Open File</a>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="tag">Project</div>
+          <h3>3D True Scale</h3>
+          <p>Terrain-aligned turbine layout with DEM-derived elevation context.</p>
+        </div>
+        <div class="actions">
+          <button data-open="hill_of_towie_3d_true_scale.html">Open In Demo</button>
+          <a href="./github%20project_wind/hill_of_towie_3d_true_scale.html" target="_blank" rel="noreferrer">Open File</a>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <div class="tag">Project</div>
+          <h3>Speed Explorer</h3>
+          <p>Terrain-aware 3D wind-speed exploration with turbine-level interaction.</p>
+        </div>
+        <div class="actions">
+          <button data-open="hill_of_towie_interactive_speed.html">Open In Demo</button>
+          <a href="./github%20project_wind/hill_of_towie_interactive_speed.html" target="_blank" rel="noreferrer">Open File</a>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section id="frameView">
+    <div id="loading"><span class="loadingDot"></span><span id="loadingLabel">Loading view...</span></div>
+    <iframe id="viewer" referrerpolicy="no-referrer"></iframe>
+  </section>
+</main>
+
+<script>
+const HOME = '__home__';
+const MODULES = {
+  'annual_wind_rose_2023_interactive.html': 'Wind Rose',
+  'wind_uv_anomalies_2023_offline.html': 'U/V Component Chart',
+  'hill_of_towie_3d_true_scale.html': '3D True Scale',
+  'hill_of_towie_interactive_speed.html': 'Speed Explorer',
+};
+
+const homeView = document.getElementById('homeView');
+const frameView = document.getElementById('frameView');
+const viewer = document.getElementById('viewer');
+const loading = document.getElementById('loading');
+const loadingLabel = document.getElementById('loadingLabel');
+const openBtn = document.getElementById('openBtn');
+const reloadBtn = document.getElementById('reloadBtn');
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+const tabs = [...document.querySelectorAll('.tab')];
+
+let current = HOME;
+
+function moduleUrl(file){
+  return './github%20project_wind/' + encodeURIComponent(file).replace(/%2F/g, '/');
+}
+
+function setButtons(){
+  const disabled = current === HOME;
+  reloadBtn.disabled = disabled;
+  fullscreenBtn.disabled = disabled;
+}
+
+function updateNav(){
+  tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.file === current));
+  setButtons();
+}
+
+function updateUrl(){
+  const url = new URL(window.location.href);
+  if(current === HOME){
+    url.searchParams.delete('view');
+  }else{
+    url.searchParams.set('view', current);
+  }
+  history.replaceState({}, '', url);
+}
+
+function showHome(){
+  current = HOME;
+  viewer.removeAttribute('src');
+  frameView.style.display = 'none';
+  homeView.style.display = 'block';
+  document.title = 'Hill of Towie - Online Demo';
+  updateNav();
+  updateUrl();
+}
+
+function showModule(file, forceReload){
+  if(!MODULES[file]) return;
+  current = file;
+  homeView.style.display = 'none';
+  frameView.style.display = 'block';
+  loadingLabel.textContent = 'Loading ' + MODULES[file] + '...';
+  loading.style.display = 'flex';
+  const src = moduleUrl(file) + (forceReload ? '?refresh=' + Date.now() : '');
+  if(forceReload || viewer.dataset.current !== file){
+    viewer.dataset.current = file;
+    viewer.src = src;
+  }else{
+    loading.style.display = 'none';
+  }
+  document.title = MODULES[file] + ' | Hill of Towie';
+  updateNav();
+  updateUrl();
+}
+
+tabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    if(tab.dataset.file === HOME){
+      showHome();
+    }else{
+      showModule(tab.dataset.file, false);
+    }
+  });
+});
+
+document.querySelectorAll('[data-open]').forEach((button) => {
+  button.addEventListener('click', () => showModule(button.dataset.open, false));
+});
+
+viewer.addEventListener('load', () => {
+  loading.style.display = 'none';
+});
+
+openBtn.addEventListener('click', () => {
+  if(current === HOME){
+    window.open('./', '_blank', 'noopener,noreferrer');
+    return;
+  }
+  window.open(moduleUrl(current), '_blank', 'noopener,noreferrer');
+});
+
+reloadBtn.addEventListener('click', () => {
+  if(current !== HOME){
+    showModule(current, true);
+  }
+});
+
+fullscreenBtn.addEventListener('click', () => {
+  if(current === HOME) return;
+  const target = frameView;
+  if(document.fullscreenElement){
+    document.exitFullscreen().catch(() => {});
+  }else if(target.requestFullscreen){
+    target.requestFullscreen().catch(() => {});
+  }
+});
+
+const initial = new URLSearchParams(window.location.search).get('view');
+if(initial && MODULES[initial]){
+  showModule(initial, false);
+}else{
+  showHome();
+}
+</script>
+</body>
+</html>

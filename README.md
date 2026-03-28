@@ -4,6 +4,12 @@ An offline-first wind-farm visualisation project that turns SCADA measurements, 
 
 This lightweight repository is the portfolio version of the project: it keeps the cleaned source code, the active module outputs, and the pack builder, while staying inside normal GitHub file-size limits.
 
+## Online Demo
+
+- GitHub Pages entry: [https://wenyugao1.github.io/hill-of-towie-wind-visualisation/](https://wenyugao1.github.io/hill-of-towie-wind-visualisation/)
+- After pushing this update, enable Pages in GitHub:
+  `Settings -> Pages -> Deploy from a branch -> main / (root)`
+
 ## Project Highlights
 
 - Built four coordinated visualisation modules for wind-farm analysis
@@ -70,6 +76,7 @@ Terrain-aware 3D wind-speed exploration view with directional and turbine-level 
 
 ```text
 github_light/
+|-- .nojekyll
 |-- assets/
 |   `-- screenshots/
 |       |-- pack-overview.png
@@ -90,6 +97,7 @@ github_light/
 |   `-- hill_of_towie_interactive_speed.html
 |-- main.py
 |-- build_full_pack.py
+|-- index.html
 |-- requirements.txt
 `-- README.md
 ```
@@ -98,6 +106,7 @@ github_light/
 
 - The active source code for the four module generators
 - The current standalone module HTML outputs
+- A GitHub Pages-ready root entry in `index.html`
 - The pack builder in `main.py`
 - A structure suitable for a normal GitHub repository without Git LFS
 
