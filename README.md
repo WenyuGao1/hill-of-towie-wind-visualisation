@@ -53,19 +53,19 @@ The public lightweight repository keeps the modular HTML demos, while the full l
 
 ### 1. Wind Rose
 
-Interactive annual wind-direction and wind-speed distribution view.
+This module consolidates the cleaned 2023 SCADA files into a single annual wind-resource view, binning wind direction into 16 sectors and stacking the frequency of multiple wind-speed bands in each sector. The generated HTML adds an interactive side panel for toggling speed layers on and off, making it easy to separate the dominant directional pattern from the contribution of stronger wind regimes. As a front-door view, it gives a compact summary of the site's prevailing wind structure before moving into turbine-level or terrain-aware analysis.
 
 ### 2. U/V Component Chart
 
-Monthly east-west and north-south wind component time series, simplified to remove anomaly-report presentation.
+This module transforms measured wind speed and direction into east-west (`u`) and north-south (`v`) vector components, then rebuilds the year as monthly dual-panel time-series views with all turbines shown on shared axes. In code, the pipeline reads the cleaned SCADA tables, computes the vector decomposition, groups the data by month, and packages each month into a single Plotly figure that is redrawn into one stable container when the user switches months. That matters because it turns what used to be an anomaly-report-style page into a cleaner diagnostic tool for directional wind behaviour: instead of only seeing magnitude, you can compare how different turbines respond to the same atmospheric shifts along two physically meaningful axes.
 
 ### 3. 3D True Scale
 
-Terrain-aligned 3D turbine layout using DEM-derived elevation data.
+This module projects turbine metadata into British National Grid coordinates, crops the DEM to the actual wind-farm neighbourhood, interpolates ground elevation at each turbine location, and places the turbine hubs back onto the terrain at true spatial positions. The resulting view is not a schematic layout but a terrain-aligned spatial model, so relative elevation, turbine spacing, and ridge or slope placement remain visually meaningful. It serves as the geometric baseline for understanding how the site is arranged in real ground coordinates.
 
 ### 4. Speed Explorer
 
-Terrain-aware 3D wind-speed exploration view with directional and turbine-level interaction.
+This is the most interaction-heavy module in the repository: it combines SCADA aggregation, terrain rendering, turbine geometry, and linked controls into one exploratory 3D view. The generator precomputes turbine-level mean wind speeds on a grid of wind-direction bins and `T15` speed conditions, loads and crops the DEM, extracts a reusable turbine 3D model, instantiates wake cones across the site, and keeps the 3D scene synchronized with a turbine-by-turbine bar chart on the right. The result is a terrain-aware exploration tool where the reader can change wind direction and reference wind speed, then immediately inspect how the whole farm's speed distribution and wake footprint shift under different operating conditions; the sample-count check is an extra detail that makes the interaction more defensible rather than purely decorative.
 
 ## Tech Stack
 
