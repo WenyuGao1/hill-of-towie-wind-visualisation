@@ -113,17 +113,26 @@ github_light/
 - The pack builder in `main.py`
 - A structure suitable for a normal GitHub repository without Git LFS
 
-## What It Intentionally Omits
+## Public Repository Scope
+
+This public portfolio repository keeps the parts that are most useful for review:
+the active module-generator source code, the standalone HTML demos, and the GitHub Pages entry used for online viewing.
+
+With this lightweight version you can:
+
+- Read the cleaned source code for the four active modules
+- Open the included module HTML files directly
+- Run `python main.py` to rebuild a local `Pack.html` from the included module HTML files
+
+## Notes on Full Rebuild
+
+To keep the repository inside normal GitHub file-size limits, it does not include:
 
 - The large dissertation-era raw datasets
 - The full offline `Pack.html` artifact
 - The heavyweight rebuild inputs required by `build_full_pack.py`
 
-This means:
-
-- You can open the included module HTML files directly
-- You can run `python main.py` to rebuild a local `Pack.html` from the included module HTML files
-- You cannot fully regenerate every module from raw data using this lightweight repo alone
+The full raw-data regeneration workflow therefore remains part of the larger local project rather than this public lightweight copy.
 
 ## Install
 
