@@ -124,16 +124,6 @@ With this lightweight version you can:
 - Open the included module HTML files directly
 - Run `python main.py` to rebuild a local `Pack.html` from the included module HTML files
 
-## Notes on Full Rebuild
-
-To keep the repository inside normal GitHub file-size limits, it does not include:
-
-- The large dissertation-era raw datasets
-- The full offline `Pack.html` artifact
-- The heavyweight rebuild inputs required by `build_full_pack.py`
-
-The full raw-data regeneration workflow therefore remains part of the larger local project rather than this public lightweight copy.
-
 ## Install
 
 ```powershell
