@@ -6,9 +6,12 @@ This lightweight repository is the portfolio version of the project: it keeps th
 
 ## Online Demo
 
-- GitHub Pages entry: [https://wenyugao1.github.io/hill-of-towie-wind-visualisation/](https://wenyugao1.github.io/hill-of-towie-wind-visualisation/)
-- After pushing this update, enable Pages in GitHub:
-  `Settings -> Pages -> Deploy from a branch -> main / (root)`
+- GitHub Pages homepage: [https://wenyugao1.github.io/hill-of-towie-wind-visualisation/](https://wenyugao1.github.io/hill-of-towie-wind-visualisation/)
+- Direct module views:
+  - [Wind Rose](https://wenyugao1.github.io/hill-of-towie-wind-visualisation/?view=annual_wind_rose_2023_interactive.html)
+  - [U/V Component Chart](https://wenyugao1.github.io/hill-of-towie-wind-visualisation/?view=wind_uv_anomalies_2023_offline.html)
+  - [3D True Scale](https://wenyugao1.github.io/hill-of-towie-wind-visualisation/?view=hill_of_towie_3d_true_scale.html)
+  - [Speed Explorer](https://wenyugao1.github.io/hill-of-towie-wind-visualisation/?view=hill_of_towie_interactive_speed.html)
 
 ## Project Highlights
 
@@ -17,7 +20,7 @@ This lightweight repository is the portfolio version of the project: it keeps th
 - Packaged multiple HTML views into a single `Pack.html` workflow
 - Preserved an offline presentation path while also preparing a GitHub-friendly lightweight version
 
-## Live Demo Files In This Repo
+## Standalone HTML Files In This Repo
 
 - [Wind Rose](./github%20project_wind/annual_wind_rose_2023_interactive.html)
 - [U/V Component Chart](./github%20project_wind/wind_uv_anomalies_2023_offline.html)
