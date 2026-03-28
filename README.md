@@ -117,6 +117,7 @@ github_light/
 
 This public portfolio repository keeps the parts that are most useful for review:
 the active module-generator source code, the standalone HTML demos, and the GitHub Pages entry used for online viewing.
+The large dissertation-era raw datasets are intentionally not included in this lightweight public copy.
 
 With this lightweight version you can:
 
